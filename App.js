@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
-import { StyleSheet, Text, View , TouchableOpacity} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View , TouchableOpacity, Button} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import BlockRGB from "./components/BlockRGB";
@@ -15,6 +15,13 @@ function HomeScreen({ navigation }) {
     {red: 0, green: 0, blue: 255, id:"2"},
 
   ]);
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight:() => <Button onPress={addColor} title="Add Color" />,
+      headerLeft:() => <Button onPress={clearColor} title="Reset" />,
+    });
+  });
 
   function renderItem({ item }){
 
@@ -44,7 +51,7 @@ function HomeScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-       <TouchableOpacity
+       {/* <TouchableOpacity
        style={{ height: 40, justifyContent: "center" }}
        onPress={addColor}
      >
@@ -56,7 +63,7 @@ function HomeScreen({ navigation }) {
        onPress={clearColor}
      >
        <Text style={{ color: "red" }}>Reset Colour</Text>
-     </TouchableOpacity>
+     </TouchableOpacity> */}
 
      <FlatList style={styles.list} data={colorArray} renderItem={renderItem} />
     </View>
@@ -92,7 +99,7 @@ export default function App() {
     <NavigationContainer>
     <Stack.Navigator>
     
-      <Stack.Screen name="Kueh Lapis Generator" component={HomeScreen} />
+      <Stack.Screen name="Colorful Kueh Lapis" component={HomeScreen} />
       <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
     </Stack.Navigator>
   </NavigationContainer>
