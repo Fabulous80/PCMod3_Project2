@@ -32,7 +32,7 @@ export default function App() {
   return (
     <NavigationContainer>
     <Stack.Navigator>
-      <Stack.Screen name="Colors" component={HomeScreen} />
+      <Stack.Screen name="Kueh Lapis Generator" component={HomeScreen} />
     </Stack.Navigator>
   </NavigationContainer>
 
