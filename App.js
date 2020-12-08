@@ -7,7 +7,7 @@ import BlockRGB from "./components/BlockRGB";
 import { FlatList } from 'react-native-gesture-handler';
 import { set } from 'react-native-reanimated';
 
-function HomeScreen() {
+function HomeScreen({ navigation }) {
 
   const [colorArray, setColorArray] = useState([
     {red: 255, green: 0, blue: 0, id:"0"},
@@ -17,7 +17,12 @@ function HomeScreen() {
   ]);
 
   function renderItem({ item }){
-    return <BlockRGB red={item.red} green={item.green} blue={item.blue} />;
+
+    return (
+    <TouchableOpacity onPress={() => navigation.navigate("DetailsScreen",{...item})}>
+    <BlockRGB red={item.red} green={item.green} blue={item.blue} />
+    </TouchableOpacity>
+    );
   }
 
   function addColor() {
@@ -33,10 +38,9 @@ function HomeScreen() {
   }
  
   function clearColor() {
-    
       setColorArray([]);
-    
   }
+
 
   return (
     <View style={styles.container}>
@@ -44,7 +48,7 @@ function HomeScreen() {
        style={{ height: 40, justifyContent: "center" }}
        onPress={addColor}
      >
-       <Text style={{ color: "red" }}>Add Colour</Text>
+       <Text style={{ color: "blue" }}>Add Colour</Text>
      </TouchableOpacity>
 
      <TouchableOpacity
@@ -59,6 +63,27 @@ function HomeScreen() {
   );
  }
  
+ function DetailsScreen({route}) {
+
+  const { red, green, blue } = route.params;
+
+  return (
+    <View
+      style={[
+        styles.container,
+        {
+          justifyContent: "center",
+          backgroundColor: `rgb(${red}, ${green}, ${blue})`,
+        },
+      ]}
+    >
+      <Text style={styles.detailsText}>Red: {red}</Text>
+      <Text style={styles.detailsText}>Green: {green}</Text>
+      <Text style={styles.detailsText}>Blue: {blue}</Text>
+    </View>
+  );
+}
+
  const Stack = createStackNavigator();
 
 
@@ -68,6 +93,7 @@ export default function App() {
     <Stack.Navigator>
     
       <Stack.Screen name="Kueh Lapis Generator" component={HomeScreen} />
+      <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
     </Stack.Navigator>
   </NavigationContainer>
 
@@ -86,4 +112,10 @@ const styles = StyleSheet.create({
     width: "100%",
   },
  
+  detailsText:{
+    fontSize: 36,
+    marginBottom: 12,
+  },
+
+
 });
