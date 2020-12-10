@@ -65,7 +65,10 @@ function HomeScreen({ navigation }) {
        <Text style={{ color: "red" }}>Reset Colour</Text>
      </TouchableOpacity> */}
 
-     <FlatList style={styles.list} data={colorArray} renderItem={renderItem} />
+     <FlatList  style={styles.list} 
+                data={colorArray} 
+                renderItem={renderItem} 
+                numColumns={4}  />
     </View>
   );
  }
@@ -73,6 +76,7 @@ function HomeScreen({ navigation }) {
  function DetailsScreen({route}) {
 
   const { red, green, blue } = route.params;
+  
 
   return (
     <View
