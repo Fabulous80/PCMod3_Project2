@@ -1,11 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View , TouchableOpacity, Button} from 'react-native';
+import { StyleSheet, Text, View , TouchableOpacity, Button, useWindowDimensions} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import BlockRGB from "./components/BlockRGB";
 import { FlatList } from 'react-native-gesture-handler';
 import { set } from 'react-native-reanimated';
+
+
+const NUM_COLUMNS = 5;
+
 
 function HomeScreen({ navigation }) {
 
@@ -15,6 +19,7 @@ function HomeScreen({ navigation }) {
     {red: 0, green: 0, blue: 255, id:"2"},
 
   ]);
+  const BLOCK_SIZE = useWindowDimensions().width/NUM_COLUMNS;
 
   useEffect(() => {
     navigation.setOptions({
@@ -27,7 +32,7 @@ function HomeScreen({ navigation }) {
 
     return (
     <TouchableOpacity onPress={() => navigation.navigate("DetailsScreen",{...item})}>
-    <BlockRGB red={item.red} green={item.green} blue={item.blue} />
+    <BlockRGB style={{ height: BLOCK_SIZE, width:BLOCK_SIZE}} red={item.red} green={item.green} blue={item.blue} />
     </TouchableOpacity>
     );
   }
@@ -68,7 +73,7 @@ function HomeScreen({ navigation }) {
      <FlatList  style={styles.list} 
                 data={colorArray} 
                 renderItem={renderItem} 
-                numColumns={4}  />
+                numColumns={NUM_COLUMNS}  />
     </View>
   );
  }
